@@ -1,7 +1,8 @@
-FROM nvcr.io/nvidia/tensorrt:21.02-py3
+FROM nvcr.io/nvidia/l4t-base:r32.5.0
 # For future transition to tensorrt
 
 # Install softwares
+# SHELL [ "/bin/bash" ]
 RUN apt-get update -y
 RUN apt-get upgrade -y
 RUN apt-get install -y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip \
@@ -37,13 +38,15 @@ RUN pip3 install virtualenv && \
     source /root/.bashrc
 
 # Donkeycar
-RUN mkdir -p /projects; cd /projects && \
+RUN source env/bin/activate && \
+    mkdir -p /projects; cd /projects && \
     git clone https://github.com/autorope/donkeycar && \
     cd donkeycar && \
     git checkout master && \
     pip install -e .[nano] 
 
-RUN donkey createcar --path /projects/mycar
+RUN source env/bin/activate && \
+    donkey createcar --path /projects/mycar
 
 WORKDIR /projects/mycar
 
