@@ -12,10 +12,9 @@ RUN apt-get install -y libxslt1-dev libxml2-dev libffi-dev libcurl4-openssl-dev 
     libssl-dev libpng-dev libopenblas-dev
 RUN apt-get install -y git
 RUN apt-get install -y openmpi-doc openmpi-bin libopenmpi-dev libopenblas-dev
-RUN apt-get install python-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev \
+RUN apt-get install -y python-dev libsdl1.2-dev libsdl-image1.2-dev libsdl-mixer1.2-dev \
     libsdl-ttf2.0-dev libsdl1.2-dev libsmpeg-dev python-numpy subversion libportmidi-dev \ 
-    ffmpeg libswscale-dev libavformat-dev libavcodec-dev libfreetype6-dev && \
-    pip install pygame
+    ffmpeg libswscale-dev libavformat-dev libavcodec-dev libfreetype6-dev
 
 # Install Python packages
 RUN pip3 install -U pip testresources setuptools \
@@ -32,21 +31,29 @@ RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/c
 # PyTorch?
 
 # Virtual Env
+SHELL [ "/bin/bash", "-c" ]
 RUN pip3 install virtualenv && \
     python3 -m virtualenv -p python3 env --system-site-packages && \
-    echo "source env/bin/activate" >> ~/.bashrc && \
+    echo "source /env/bin/activate" >> ~/.bashrc && \
     source /root/.bashrc
 
 # Donkeycar
-RUN source env/bin/activate && \
+RUN source /env/bin/activate && \
     mkdir -p /projects; cd /projects && \
     git clone https://github.com/autorope/donkeycar && \
     cd donkeycar && \
     git checkout master && \
-    pip install -e .[nano] 
+    pip install -e .[nano]
 
-RUN source env/bin/activate && \
+RUN source /env/bin/activate && \
     donkey createcar --path /projects/mycar
 
 WORKDIR /projects/mycar
 
+RUN source /env/bin/activate && \
+    python3 -m pip install -U pygame==1.9.6
+
+# Handy packages
+RUN apt-get install nano rsync zip
+
+ENTRYPOINT [ "/bin/bash" ]
