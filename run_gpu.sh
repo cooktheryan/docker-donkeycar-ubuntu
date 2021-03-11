@@ -4,4 +4,4 @@ docker run --name donkeycar --rm -it \
     --network=host \
     --device=/dev/input/js0 \
     --gpus all \
-    haoru233/tritonai-donkeycar:4.0-gpu \
+    haoru233/tritonai-donkeycar:4.1-gpu \
