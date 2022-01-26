@@ -2,10 +2,12 @@ FROM continuumio/miniconda3:latest
 
 # Install softwares
 #RUN apt-get update && apt-get install -y python=3.7 python3-pip git nano rsync zip
-RUN apt-get update && apt-get install -y git nano rsync zip gcc
+RUN apt-get update && apt-get install -y git nano rsync zip gcc gfortran build-essential pkg-config
 # Python packages
 
-# RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --upgrade pip
+RUN python3 -m pip install --upgrade setuptools wheel
+RUN python3 -m pip install PEP517
 # RUN python3 -m pip install opencv-python --upgrade
 
 # Install donkeycar
@@ -33,6 +35,3 @@ RUN /bin/bash -c ". activate donkey && \
 
 WORKDIR /donkeys/mycar
 RUN echo 'conda activate donkey' >> /root/.bashrc
-# SHELL ["conda", "run", "-n", "donkey", "/bin/bash", "-c"]
-# ENTRYPOINT ["/bin/bash", "-c", ". activate donkey"]
-RUN /bin/bash -c ". activate donkey"
