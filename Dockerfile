@@ -35,6 +35,4 @@ WORKDIR /donkeys/mycar
 RUN echo 'conda activate donkey' >> /root/.bashrc
 # SHELL ["conda", "run", "-n", "donkey", "/bin/bash", "-c"]
 # ENTRYPOINT ["/bin/bash", "-c", ". activate donkey"]
-# GPU capable?
-RUN /bin/bash -c ". activate donkey && \
-    conda install tensorflow-gpu==2.2.0"
+RUN /bin/bash -c ". activate donkey"
