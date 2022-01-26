@@ -2,7 +2,7 @@ FROM continuumio/miniconda3:latest
 
 # Install softwares
 #RUN apt-get update && apt-get install -y python=3.7 python3-pip git nano rsync zip
-RUN apt-get update && apt-get install -y git nano rsync zip
+RUN apt-get update && apt-get install -y git nano rsync zip gcc
 # Python packages
 
 # RUN python3 -m pip install --upgrade pip
