@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install -y git nano rsync zip
 # RUN python3 -m pip install opencv-python --upgrade
 
 # Install donkeycar
-RUN git clone https://github.com/autorope/donkeycar && \
+RUN git clone https://github.com/cooktheryan/donkeycar && \
     cd donkeycar && \
-    git checkout master && \
+    git checkout arm && \
     conda env create -f install/envs/ubuntu.yml
 
 RUN conda init bash
